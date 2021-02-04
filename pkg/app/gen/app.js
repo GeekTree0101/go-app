@@ -96,3 +96,23 @@ function goappKeepBodyClean() {
 
   return () => mutationObserver.disconnect();
 }
+
+// -----------------------------------------------------------------------------
+// Notifications
+// -----------------------------------------------------------------------------
+function goappAskNotificationPermission(callback) {
+  if (!('Notification' in window)) {
+    callback('not-supported');
+    return
+  }
+
+  try {
+    Notification.requestPermission().then(perm => {
+      callback(perm)
+    });
+  } catch (e) {
+    Notification.requestPermission(perm => {
+      callback(perm)
+    });
+  }
+}
